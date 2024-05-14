@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/headerLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,13 +86,35 @@
                         android:background="@drawable/ic_baseline_arrow_right_24"/>
 
                 </LinearLayout>
-                
-
 
             </LinearLayout>
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/newImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="add"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/gray"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="3dp"/>
+
     </LinearLayout>
+
+    <GridLayout
+        android:id="@+id/centerGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerLinearLayout"
+        android:layout_marginTop="10dp"
+        android:columnCount="4">
+
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
