@@ -41,7 +41,7 @@ public class Image {
 
     @Override
     public String toString() {
-        return this.name + " " + this.desc;
+        return this.name;
     }
 
 }
