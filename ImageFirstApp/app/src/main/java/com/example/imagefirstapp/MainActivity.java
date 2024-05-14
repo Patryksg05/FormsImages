@@ -2,6 +2,8 @@ package com.example.imagefirstapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button previousBtn, nextBtn, addBtn;
+    private Button previousBtn, nextBtn, addBtn, nextActivityBtn;
     private EditText imageNameEditText, imageDescEditText;
     private ImageView galleryImageView;
 
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         previousBtn = (Button) findViewById(R.id.previousImageBtn);
         nextBtn = (Button) findViewById(R.id.nextImageBtn);
         addBtn = (Button) findViewById(R.id.newImageBtn);
+        nextActivityBtn = (Button) findViewById(R.id.nextActivityBtn);
         imageNameEditText = (EditText) findViewById(R.id.imageNameEditText);
         imageDescEditText = (EditText) findViewById(R.id.imageDescEditText);
         galleryImageView = (ImageView) findViewById(R.id.galleryImageView);
@@ -109,6 +112,16 @@ public class MainActivity extends AppCompatActivity {
                             currentIndex = 0;
 
                         galleryImageView.setImageResource(images.get(currentIndex).getSrc());
+                    }
+                }
+        );
+
+        nextActivityBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, RandomImage.class);
+                        startActivity(intent);
                     }
                 }
         );
