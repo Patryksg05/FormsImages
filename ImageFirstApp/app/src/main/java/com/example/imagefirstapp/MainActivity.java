@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private EditText imageNameEditText, imageDescEditText;
     private ImageView galleryImageView;
     private Spinner spinner;
+    private SeekBar seekBar;
 
     private GridLayout galleryGridLayout;
 
@@ -53,6 +55,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         galleryImageView = (ImageView) findViewById(R.id.galleryImageView);
         galleryGridLayout = (GridLayout) findViewById(R.id.centerGridLayout);
         spinner = (Spinner) findViewById(R.id.spinner);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+
+        int step = 1;
+        int max = images.size();
+        int min = 0;
+
+        seekBar.setMax((max-min)/step);
+
+        seekBar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        int value = min + (progress*step);
+                        Toast.makeText(MainActivity.this, Integer.toString(value), Toast.LENGTH_SHORT).show();
+                        galleryImageView.setImageResource(images.get(value).getSrc());
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
 
         galleryImageView.setVisibility(View.VISIBLE);
         galleryImageView.setImageResource(images.get(0).getSrc());
