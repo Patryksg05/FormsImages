@@ -13,10 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button previousBtn, nextBtn;
+    private Button previousBtn, nextBtn, addBtn;
     private EditText imageNameEditText, imageDescEditText;
     private ImageView galleryImageView;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Image> images = new ArrayList<Image>();
     private ArrayList<Image> views = new ArrayList<Image>();
 //    private ImageView[] views = new ImageView[10];
+    private final Random random = new Random();
 
     private int currentIndex = 0;
 
@@ -38,33 +40,35 @@ public class MainActivity extends AppCompatActivity {
 
         previousBtn = (Button) findViewById(R.id.previousImageBtn);
         nextBtn = (Button) findViewById(R.id.nextImageBtn);
+        addBtn = (Button) findViewById(R.id.newImageBtn);
         imageNameEditText = (EditText) findViewById(R.id.imageNameEditText);
         imageDescEditText = (EditText) findViewById(R.id.imageDescEditText);
         galleryImageView = (ImageView) findViewById(R.id.galleryImageView);
         galleryGridLayout = (GridLayout) findViewById(R.id.centerGridLayout);
 
-        for(int i=0; i<views.size(); i++)
-        {
-            ImageView image = new ImageView(this);
-            image.setLayoutParams(new GridLayout.LayoutParams());
-            image.setImageResource(images.get(i).getSrc());
-            galleryGridLayout.addView(image);
+        galleryImageView.setVisibility(View.VISIBLE);
+        galleryImageView.setImageResource(images.get(0).getSrc());
 
-            final int position = i;
 
-            image.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(MainActivity.this,
-                                    "Name: " + images.get(position).getName() +
-                                    "\nDesc: " + images.get(position).getDesc(),
-                                    Toast.LENGTH_SHORT).show();
+        addBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!imageNameEditText.getText().toString().equals("")
+                            && !imageDescEditText.getText().toString().equals(""))
+                        {
+                            Image image = new Image(
+                                    imageNameEditText.getText().toString(),
+                                    imageDescEditText.getText().toString(),
+                                    R.drawable.camera4);
+                            images.add(image);
                         }
+                        else
+                            Toast.makeText(MainActivity.this, "Fill inputs!", Toast.LENGTH_SHORT).show();
                     }
-            );
-        }
-
+                }
+        );
+        setGridLayout();
 //        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 //                LinearLayout.LayoutParams.MATCH_PARENT,
 //                LinearLayout.LayoutParams.MATCH_PARENT);
@@ -80,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
 //            image.setImageResource(R.drawable.camera2);
 //            galleryGridLayout.addView(image);
 //        }
-
-        galleryImageView.setVisibility(View.VISIBLE);
-        galleryImageView.setImageResource(images.get(0).getSrc());
 
         previousBtn.setOnClickListener(
                 new View.OnClickListener() {
@@ -111,5 +112,30 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void setGridLayout()
+    {
+        for(int i=0; i<views.size(); i++)
+        {
+            ImageView image = new ImageView(this);
+            image.setLayoutParams(new GridLayout.LayoutParams());
+            image.setImageResource(images.get(i).getSrc());
+            galleryGridLayout.addView(image);
+
+            final int position = i;
+
+            image.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(MainActivity.this,
+                                    "Name: " + images.get(position).getName() +
+                                            "\nDesc: " + images.get(position).getDesc(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+        }
     }
 }
